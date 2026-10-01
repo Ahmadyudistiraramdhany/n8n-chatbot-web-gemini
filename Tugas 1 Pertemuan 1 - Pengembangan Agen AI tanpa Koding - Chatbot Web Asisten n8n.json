@@ -1,0 +1,115 @@
+{
+  "name": "Tugas 1 Pertemuan 1 - Pengembangan Agen AI tanpa Koding - Chatbot Web Asisten n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "60097578-3d01-4160-8262-7d2ce5f4e134",
+      "name": "When chat message received",
+      "webhookId": "81369aeb-00ec-485a-8a57-924717762b96"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah \"Asisten Belajar n8n\", chatbot yang membantu pemula memahami n8n.\n\nTUGAS:\nJawab HANYA pertanyaan seputar n8n, yaitu: workflow, node, trigger, credential, expression, AI Agent, chat memory, serta cara menguji, mem-publish, dan meng-unpublish workflow.\n\nATURAN:\n1. Gunakan Bahasa Indonesia yang ramah, jelas, dan singkat (maksimal sekitar 150 kata).\n2. Beri contoh sederhana bila perlu, dan gunakan langkah bernomor untuk pertanyaan \"bagaimana cara\".\n3. Gunakan riwayat percakapan sebelumnya agar jawaban nyambung.\n4. Jika pertanyaan di luar topik n8n, jangan dijawab. Balas: \"Maaf, saya hanya dapat membantu pertanyaan seputar n8n. Silakan tanyakan tentang workflow, node, trigger, atau AI Agent di n8n.\"\n5. Jika tidak yakin, katakan tidak yakin. Jangan mengarang fitur n8n."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "da7a9f6a-7075-4e1b-ab10-29ea0a50f464",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        96,
+        208
+      ],
+      "id": "ebf72b80-7428-46bd-a08f-78f014f1f3f4",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KIKnr9tfUmqFC4xw",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        272,
+        208
+      ],
+      "id": "8f3fa72d-0f7a-4b93-8070-8f020db63f4c",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9491dbf7-971b-40cc-bac5-1802e43e7850",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "pJiyGe1QpNc4jwBK",
+  "tags": []
+}
